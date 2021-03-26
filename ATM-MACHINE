@@ -1,0 +1,74 @@
+#ATM OPERATOR
+
+all_customers = {
+    'User1' : 1234,
+    'User2' : 5678,
+    'User3' : 9101}
+
+class ATM():
+    def __init__(self, Username='SAMIKO BANK', Total_amount=100000):
+        self.Username = Username
+        self.Total_amount = Total_amount
+        print('welcome to ' +self.Username + ' you have ' + str(self.Total_amount) + ' Naira')
+
+    def Request_details(self):
+        try:
+            self.account_name = raw_input('Enter your account Name: ')
+            self.account_pin = int(raw_input('Enter your account Pin: '))
+
+
+            if self.account_name in all_customers.keys() and self.account_pin == all_customers[self.account_name]:.
+                self.user_interface()
+    
+            
+            else:
+                print('Sorry the pin or Account name, you entered is incorrect')
+                print('Please try Again!!')
+
+        except ValueError:
+            self.error()
+
+    def user_interface(self):
+        print('Welcome ' +  self.account_name + ' What would you like to do? ')
+        print('Press (W) for Withdrawal, (D) for Deposit, (C) for customer services, (B) for accout Balance')
+
+        choice_of_operation = raw_input('Enter yout Choice: ')
+        
+        if choice_of_operation.upper() == 'W':
+            self.Withdraw()
+            
+        elif choice_of_operation.upper() == 'D':
+            self.Deposit()
+            
+        elif choice_of_operation.upper() == 'C':
+            self.Customer_service()
+
+        elif choice_of_operation.upper() == 'B':
+            self.CheckBalance()
+            
+        else:
+            self.error()
+
+    def Withdraw(self):
+        if self.account_name:
+            with open(str(self.account_name+'_account.txt'), 'w') as account_details:
+                self.Total_amounts = 100000
+                account_details.write(str(self.Total_amounts))
+                amount_to_withdraw = int(raw_input('Enter amount to withdraw: '))
+                if amount_to_withdraw <= self.Total_amounts:
+                    remaining_balance = self.Total_amounts - amount_to_withdraw
+                    account_details.write(str(remaining_balance))
+                    
+                    print('Success!!, You have withdrawn ' + str(amount_to_withdraw))
+                    print('You have ' + str(remaining_balance) + ' Naira, in your account Now')
+
+    def CheckBalance(self):
+        if self.account_name:
+            with open(str(self.account_name+'_account.txt'), 'r') as account_details:
+                account_balance = account_details.read()
+                print('Your account Balance is ' + str(account_balance) + ' Naira Only')
+        
+    def error(self):
+        print('Sorry!, Theres an error in your input, check and try again')
+
+ATM().Request_details()
